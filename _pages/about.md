@@ -6,4 +6,5 @@ layout: single
 
 ## Who am I?
 
-Senior @ University of Maryland, College Park B.S., Major in Computer Science, Minor in Statistics
+미쿡에서 Computer Science를 전공하고 있는 학생입니다.
+공부할겸 이것저것 끄적끄적 적어보려고 합니다...😎
