@@ -1,0 +1,70 @@
+---
+title: "Approximation Algorithm- Load Balancing"
+excerpt: "Load Balancing Approximate and Optimal Algorithm"
+
+toc: true
+toc_sticky: true
+
+categories:
+  - Algorithm
+tags:
+  - Algorithm
+
+use_math: true
+comments: true
+last_modified_at: 2020-11-28T08:06:00-05:00
+---
+
+# A Load Balancing Problem
+
+Load balancing 문제는 approximation algorithm을 디자인하고 분석함에 있어 가장 기본이 되고 유용한 문제입니다. 특히 efficient하게 해결할 수 없는 approximate solution을 비교하는 문제에 대해서는 말이죠.
+
+## 1. Load Balancing 문제 정의
+
+아래와 같은 조건에서,
+
+- a set of $m$: $M_{1},M_{2},...,M_{m}$
+- a set of $n$ jobs and each job $j$ has a processing time $t_{j}$
+
+각 job 을 한개의 머신에 할당하며 결국 모든 머신에 할당되는 Loads를 최대한 balanced 하게 하는 방법을 찾는 것 입니다.
+
+이제 우리는 $A(i)$를 $M_{1}$에 할당된 jobs로 정의하도록 하겠습니다. 그리고, $M_{1}$에 할당된 jobs의 total time은 $T_{i} = \sum_{j\in A(i)}^{}t_{j}$로 정의합니다.(= $M_{1}$에 할당된 load)
+
+결국 우리는 머신에 할당된 로드 중 최대로드를 최소화하는 방법을 찾으면 됩니다.
+
+## 2. 알고리즘 정의
+
+먼저 greedy algorithm 을 시도해 보도록 하겠습니다. 아래 알고리즘은 jobs를 one pass로 iterate하면서 job j 를 가장 로드가 적은 머신에 할당하도록 하는 알고리즘 입니다. 이때, jobs를 iterate하는 순서는 상관 없습니다.
+
+```
+Greedy-Balance:
+Set Ti = 0 and A(i)=∅ for all machines Mi
+For j = 1, . . . , n
+    Let Mi be a machine that achieves the minimum mink Tk
+    Assign job j to machine Mi
+    Set A(i)←A(i) ∪ {j}
+    Set Ti←Ti + tj
+EndFor
+```
+
+`2,3,4,6,2,2`의 jobs 가 있고 머신이 3개 있을때 아래와 같이 할당할 수 있고 그 결과 makespan(최대로드)의 값으로 8을 갖게 됩니다.
+
+![example](https://user-images.githubusercontent.com/48766032/100515766-c6e0c300-31c1-11eb-9a6d-bd0ff2a743cc.png)
+
+그러나!! 아마 아시겠지만 이것은 optimal한 솔루션이 아닙니다. 만약 `6,4,3,2,2,2`로 할당하게 된다면 makespan 값을 7로 얻을 수 있고 우리는 더 optimal한 솔루션을 얻을 수 있으니까요..!
+
+## 3. 알고리즘 분석
+
+이제부터 $T$는 makespan 이라고 정의를 하도록 하겠습니다. 이제 우리는 $T$가 가능한 최소한의 makespan인 어떤 $T^{\*}$를 넘지 않는다는 것을 증명하도록 하겠습니다. (참고로 우리는 아직 $T^{*}$가 무엇인지 모르는 상태입니다...^^;;)
+
+### 3.1 Lower Bound
+
+> Idea: m개의 머신 중 적어도 한개의 머신은 $1/m$만큼의 일을 한다.
+
+$T^{*}\geq \frac{1}{m}\sum_{j}^{}t_{j}$
+
+> Idea: optimal makespan은 최대 $t_{j}$보다 같거나 크다.
+
+$T^{*}\geq max_{j}t_{j}$
+
+### 3.2 Upper Bound
