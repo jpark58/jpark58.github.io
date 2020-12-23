@@ -1,0 +1,98 @@
+---
+title: "LeetCode 990"
+excerpt: "Satisfiability of Equality Equations"
+
+toc: true
+toc_sticky: true
+
+categories:
+  - Algorithm
+tags:
+  - Algorithm
+last_modified_at: 2020-12-23T08:06:00-05:00
+---
+
+## 원본 링크
+
+<https://leetcode.com/problems/satisfiability-of-equality-equations/>
+
+## 문제설명(Difficulty: Medium)
+
+Given an array equations of strings that represent relationships between variables, each string `equations[i]` has length 4 and takes one of two different forms: `"a==b"` or `"a!=b"`. Here, `a` and `b` are lowercase letters (not necessarily different) that represent one-letter variable names.
+
+Return `true` if and only if it is possible to assign integers to variable names so as to satisfy all the given equations.
+
+Example1:
+
+```
+Input: ["a==b","b!=a"]
+Output: false
+Explanation: If we assign say, a = 1 and b = 1, then the first equation is satisfied, but not the second.  There is no way to assign the variables to satisfy both equations.
+```
+
+Example2:
+
+```
+Input: ["b==a","a==b"]
+Output: true
+Explanation: We could assign a = 1 and b = 1 to satisfy both equations.
+```
+
+Example3:
+
+```
+Input: ["a==b","b==c","a==c"]
+Output: true
+
+Input: ["a==b","b!=c","c==a"]
+Output: false
+
+Input: ["c==c","b==d","x!=z"]
+Output: true
+```
+
+## 문제풀이
+
+Union find 를 통해 해결 가능한 문제입니다. 일단 lowercase letters라고 문제에서 주어졌으니, 우리는 size 26의 array를 만들어 줍니다. 이제 이 array는 각각 자신을 element로 가지는 set이 되도록 for-loop를 돌면서 자기 자신으로 initialize를 해주도록 합니다. `ex) map[i] = i`
+
+이제 `find` 메소드를 만들어줄 차례인데요, 이건 워낙 typical 하게 알려준 방법이니까 생략..!!  
+이제 `equations`를 돌면서 `==`인 경우를 먼저 처리하도록 하겠습니다. `==`인 경우가 바로 `union` operation에 해당하게 되는데요. 따로 `union` 메소드를 빼줄수도 있지만 일단 for loop 안에 그냥 넣었습니다. 크게 상관은 없겠군요.
+
+마지막으로 이제 다시 한번 `equations`를 돌면서 `!=`인 경우, 두 element가 혹시 같은 set에 있는지 확인해 줍니다.
+만약 같은 set에 있다면 conflict하므로 `false` 를 리턴해주고, 만약 conflict가 없다면 그대로 `true`를 리턴해주면 됩니다.
+
+```java
+class Solution {
+    int[] map = new int[26];
+
+    public boolean equationsPossible(String[] equations) {
+        for(int i = 0; i < 26; i++){
+            map[i] = i;
+        }
+
+        for(String str: equations){
+            if(str.charAt(1) == '='){
+                map[find(str.charAt(0)-'a')] = find(str.charAt(3)-'a');
+            }
+        }
+
+        for(String str: equations){
+            if(str.charAt(1) == '!'){
+                if(find(str.charAt(0)-'a') == find(str.charAt(3) - 'a')){
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    private int find(int x){
+        if(map[x] != x){
+            map[x] = find(map[x]);
+        }
+
+        return map[x];
+    }
+}
+```
