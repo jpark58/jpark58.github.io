@@ -1,3 +1,17 @@
+---
+title: "[Android] Manifest 항목 정리"
+excerpt: "Week#1 - Manifest 항목 정리하기"
+
+toc: true
+toc_sticky: true
+
+categories:
+  - Android
+tags:
+  - Android
+last_modified_at: 2021-01-02T08:06:00-05:00
+---
+
 # Manifest 정리
 
 ## 1. Manifest 란?
@@ -54,9 +68,9 @@ AndroidManifest.xml 파일의 루트 요소로, `<application>` 요소를 포함
 
   `Activity`, `Service`, `Broadcast-reciever` 가 응답할 수 있는 `Intent`의 유형을 지정
 
-  - 포함해야 하는 요소: `<action>` 
+  - 포함해야 하는 요소: `<action>`
     어떤 작업을 처리할 수 있는지 정의 ex) `<action android:name="com.example.project.TRANSMOGRIFY" />`
-  - 포함 가능한 요소: `<category>`, `<data>`  
+  - 포함 가능한 요소: `<category>`, `<data>`
 
   #### `Intent` 란?
 
@@ -85,4 +99,3 @@ AndroidManifest.xml 파일의 루트 요소로, `<application>` 요소를 포함
 ### 2.6 `<provider>`
 
 `Content Provier` Component를 정의 및 애플리케이션에서 관리되는 데이터에 관해 구조화된 액세스를 제공
-
