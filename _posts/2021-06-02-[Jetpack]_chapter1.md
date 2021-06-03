@@ -14,8 +14,9 @@ use_math: true
 last_modified_at: 2021-06-02T08:06:00-05:00
 ---
 
+본 글은 구글에서 제공하는 Codelab을 번역하며 튜토리얼을 따라합니다.
+
 # Welcome
-## 개요
 기존에는 `findViewById()`를 이용해 뷰의 참조값을 받아왔습니다. 그러나 뷰의 구조가 복잡할 경우, 트리 구조로 뷰를 traverse하는 특성상 `findViewById()`는 cost가 매우 비싸고 느려서 문제가 많았습니다. 다행히도!? Jetpack에서 Data binding이라는 기능을 제공함으로써 뷰에 데이터를 효율적으로 제공해줄 수 있게 되었습니다. xml뷰 안에 바로 데이터를 정의해주는 것 입니다. 본 코드랩 튜토리얼 과정을 통해 Data binding을 알아보도록 하겠습니다. 
 
 # App Overview
@@ -60,3 +61,21 @@ Data binding은 다음과 같은 장점이 있습니다.
   }
   ```
 - 우측 상단의 `Sync` 버튼 클릭
+
+## Step2: 데이터 바인딩 사용을 위해 레이아웃 파일 설정하기
+데이터 바인딩을 사용하기 위해서는 xml layout 전체를 `<layout>`으로 감싸줘야 합니다. 이렇게 함으로써, root class가 더이상 뷰그룹이 아니고, 레이아웃 자체가 뷰그룹과 뷰를 포함하는 것으로 변경이 됩니다. 데이터 바인딩 객체는 이제 그 안의 레이아웃과 뷰를 알게 됩니다.
+- `activity_main.xml` 파일 열기
+- `<layout></layout>`으로 `LinearLayout` 전체 감싸기
+  ```xml
+  <layout>
+    <LinearLayout ... >
+    ...
+    </LinearLayout>
+  </layout>
+  ```
+- namespace에 대한 정의를 `<LinearLayout>`에서 `<layout>` 태그쪽으로 옮겨줍니다. 아래 참고
+  ```xml
+  <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+  ```
+- run 해서 정상적으로 빌드되는지 확인!
