@@ -24,7 +24,9 @@ last_modified_at: 2021-06-08T08:06:00-05:00
     ```kotlin
     data class MyName(var name: String = "", var nickname: String = "")
     ```
-## Step2: 레이아웃에 데이터 채우기
+
+## Step2: 레이아웃에 데이터 채우기 
+
 `activity_main.xml`파일에서, name은 `TextView` 에서 string resource로 설정이 되어있습니다. 이제, 이부분을 데이터 클래스의 데이터를 활용해 대체해 보겠습니다.
 1. `activity_main.xml`파일의 `Text` 탭을 열어줍니다.
 2. 레이아웃 최상위레벨 `<layout>`과 `<LinearLayout>`태그 사이에 `<data></data>`태그를 삽입합니다. 이 부분이 뷰와 데이터를 연결해줍니다. 
