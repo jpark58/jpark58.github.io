@@ -79,3 +79,67 @@ Data binding은 다음과 같은 장점이 있습니다.
     xmlns:app="http://schemas.android.com/apk/res-auto">
   ```
 - run 해서 정상적으로 빌드되는지 확인!
+
+## Step3: 메인액티비티에서 바인딩 객체 생성하기
+뷰에 접근하기위해 메인액티비티에서 바인딩 객체의 참조를 설정해줍니다.
+- `MainActivity.kt`파일
+- `onCreate()` 위에 바인딩 객체를 위한 변수를 선언합니다. 보통, `binding`이라고 선얼을 해줍니다.
+
+  binding 객체의 type은 `ActivityMainBinding`이며, 컴파일러에 의해 메인액티비티를 위해 자동으로 생성됩니다. 레이아웃 파일에서 이름을 가져오게 되는데, `activity_main + Binding` 형식을 따릅니다.
+  ```kotlin
+  private lateinit var binding: ActivityMainBinding
+  ```
+- 필요하면 `ActivityMainBinding`을 import 해주세요.
+  ```kotlin
+  import com.example.android.aboutme.databinding.ActivityMainBinding
+  ```
+- 이제 `setContentView()` 펑션을 다음의 과정에 따라 대체해줍니다.
+  - 바인딩 객체 생성
+  - `DataBindingUtil` 클래스의 `setContentView()`를 이용해 `activity_main` 레이아웃을 `MainActivity`와 연결해줍니다. 
+  - `onCreate()`에서 `setContentView()` 를 아래의 코드로 교체해줍니다.
+    ```kotlin
+    binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+    ```
+- `DataBindingUtil` 을 import 합니다.
+  ```kotlin
+  import androidx.databinding.DataBindingUtil
+  ```
+## Step4: 바인딩 객체를 활용해 `findViewById()` 대체하기
+
+이제 `findViewById()`를 사용하는 모든 call을 binding 객체로 대체할 수 있습니다. 바인딩 객체가 생성되면, 컴파일러는 레이아웃 내의 각 뷰들에 대한 아이디를 바탕으로 바인딩 객체를 생성합니다(이때 camel case 방식을 따릅니다). 만약 id가 `done_button` 이라면 `doneButton`으로, `nickname_edit`는 nicknameEdit`로 됩니다.
+- `onCreate()`에서, `done_button`을 참조하는 `findViewById()`를 바인딩 객체를 활용해 대체해 보세요. ex) `findViewById<Button>(R.id.done_button)` -> `binding.doneButton`
+- `onCreate()`내의 클릭 리스너 설정은 아래와 같이 되어야 합니다.
+  ```kotlin
+  binding.doneButton.setOnClickListener {
+   addNickname(it)
+  }
+  ```
+- `addNickname()` 에서도 똑같은 작업을 해줍니다. ex) `findViewById<Button>(R.id.id_view)` -> `binding.idView`
+- `findViewById()`에 사용했던 `editText`, `nicknameTextView` 관련 variable 선언부를 지워줍니다.
+- 바인딩 객체를 활용해 적절히 대체해줍니다.
+- `view.visibility`를 `binding.doneButton.visibility`로 대체해줍니다. 
+  ```kotlin
+  binding.nicknameText.text = binding.nicknameEdit.text
+  binding.nicknameEdit.visibility = View.GONE
+  binding.doneButton.visibility = View.GONE
+  binding.nicknameText.visibility = View.VISIBLE
+  ```
+- 기능상의 차이는 없습니다.
+- `nicknameText`는 `String`을 필요로 하는데, `nicknameEdit.text`는 `Editable` 타입입니ㅏ. 데이터 바인딩 사용시, `Editable`은 반드시 `String`으로 형변환 해야합니다.
+  ```kotlin
+  binding.nicknameText.text = binding.nicknameEdit.text.toString()
+  ```
+- Kotlin 식으로 적용하면 아래와 같이 바꿀수도 있습니다.
+  ```kotlin
+  binding.apply {
+   nicknameText.text = nicknameEdit.text.toString()
+   nicknameEdit.visibility = View.GONE
+   doneButton.visibility = View.GONE
+   nicknameText.visibility = View.VISIBLE
+  }
+  ```
+- 빌드 및 실행하여 확인하면 앱은 이전과 같이 동작합니다..!
+
+
+# 마무리
+일단 `findByViewId()`를 데이터바인딩 객체를 사용해 대체하는 연습을 해보았습니다. 다음에는 바인딩된 데이터를 뷰에 디스플레이 하는 것을 해보겠습니다...!!
