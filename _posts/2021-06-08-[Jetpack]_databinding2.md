@@ -1,6 +1,6 @@
 ---
 title: "[Jetpack] Data binding Codelab 튜토리얼 따라하기 2편"
-excerpt: "Google에서 제공하는 Codelab에서 Data binding을 사용해 화면에 데이터를 띄워보자..!!"
+excerpt: "Google에서 제공하는 Codelab에서 Data binding을 사용해 화면에 데이터를 띄워보자...!!"
 
 toc: true
 toc_sticky: true
@@ -45,7 +45,9 @@ last_modified_at: 2021-06-08T08:06:00-05:00
       ```xml
       android:text="@={myName.name}"
       ```
+
 ## Step3: 데이터 만들기
+
 레이아웃내에 데이터들에 대한 참조를 얻었습니다. 이제 실제 데이터를 채워넣어 보겠습니다.
 1. `MainActivty.kt`를 열어줍니다.
 2. `onCreate()`위에 private 변수로 `myName`을 만들고 data class instance를 넣어줍니다. 
