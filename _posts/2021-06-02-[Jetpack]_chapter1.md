@@ -1,6 +1,6 @@
 ---
-title: "[Jetpack] Data binding Codelab 튜토리얼 따라하기"
-excerpt: "Google에서 제공하는 Codelab에서 Data binding을 따라해보자"
+title: "[Jetpack] Data binding Codelab 튜토리얼 따라하기 1편"
+excerpt: "Google에서 제공하는 Codelab에서 Data binding을 사용해 `findViewById()`를 대체해보자..!!"
 
 toc: true
 toc_sticky: true
